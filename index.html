@@ -5,40 +5,42 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
-  <title>Document</title>
+  <title>Calculator</title>
 </head>
 <body>
   <script src="script.js" defer></script>
   <div class="calc-container">
     <div class="display">
-      <p class="display-text">12345</p> 
+      <p class="operations-text"></p>
+      <p class="display-text">0</p> 
     </div>
     <div class="btns-container">
       <div class="row-1">
         <button class="operations" id="clear">Clear</button>
-        <button class="operations">/</button>
+        <button class="operations" id="delete">Del</button>
+        <button class="operations" id="divide">/</button>
       </div>
       <div class="row-2">
-        <button class="numpad">7</button>
-        <button class="numpad">8</button>
-        <button class="numpad">9</button>
-        <button class="operations">x</button>
+        <button class="numpad" id="numPad7">7</button>
+        <button class="numpad" id="numPad8">8</button>
+        <button class="numpad" id="numPad9">9</button>
+        <button class="operations" id="multiply">x</button>
       </div>
       <div class="row-3">
-        <button class="numpad">4</button>
-        <button class="numpad">5</button>
-        <button class="numpad">6</button>
-        <button class="operations">+</button>
+        <button class="numpad" id="numPad4">4</button>
+        <button class="numpad" id="numPad5">5</button>
+        <button class="numpad" id="numPad6">6</button>
+        <button class="operations" id="add">+</button>
       </div>
       <div class="row-4">
-        <button class="numpad">1</button>
-        <button class="numpad">2</button>
-        <button class="numpad">3</button>
-        <button class="operations">-</button>
+        <button class="numpad" id="numPad1">1</button>
+        <button class="numpad" id="numPad2">2</button>
+        <button class="numpad" id="numPad3">3</button>
+        <button class="operations" id="subtract">-</button>
       </div>
       <div class="row-5">
-        <button class="numpad" id="zero">0</button>
-        <button class="numpad">.</button>
+        <button class="numpad" id="numPad0">0</button>
+        <button class="numpad" id="numPad.">.</button>
         <button class="operations" id="equals">=</button>
       </div>
 

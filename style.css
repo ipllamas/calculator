@@ -3,17 +3,34 @@ div {
   border-width: 1px;
 }
 
+p {
+  font-family: sans-serif;
+}
+
+
+
 .calc-container {
   width: 360px;
 }
 
 .display {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   text-align: right;
   padding: 0 30px;
 }
 
+.operations-text {
+  height: 18px;
+  margin-bottom: 0;
+  margin-top: 7px;
+}
+
 .display-text {
   font-size: 24px;
+  font-weight: bold;
+  margin-top: 0;
 }
 
 .btns-container {
@@ -37,10 +54,10 @@ div {
 }
 
 #clear {
-  width: 270px;
+  width: 180px;
 }
 
-#zero {
+#numPad0 {
   width: 180px;
 }
 
