@@ -1,37 +1,47 @@
+
 const numpadButtons = document.querySelectorAll(".numpad, .operations");
 numpadButtons.forEach((btn) => btn.addEventListener('click', processInput));
 
+//initialize display and stored values upon first loading the page
 let currentDisplay = "0";
 let operand = currentDisplay;
 let operator;
-
 const displayText = document.querySelector('.display-text');
 const operationsText = document.querySelector('.operations-text');
 
-
+//depending on class of button pressed, run 1 of 2 functions to either input a digit or operator
 function processInput(btn) {
   const pressed = btn.target.getAttribute('class');
   pressed === 'numpad' ? inputDigit(btn.target) : inputOperator(btn.target);
 }
 
+//contains logic to handle arguments to be passed to changeDisplay function
+//if only 0 is displayed, replaces it with inputted digit
+//prevents subsequent decimals being inputted if display already has a decimal
+//allows for the 2nd operand to be inputted when the the previous button press was an operator
 function inputDigit(pressedDigit) {
   const digit = pressedDigit.getAttribute('id').slice(6);
-  console.log(digit);
   if (currentDisplay === '0') {
     changeDisplay(digit, true);
-  } else if (digit === '.' && currentDisplay.includes('.')) {
+  }
+  else if (digit === '.' && currentDisplay.includes('.')) {
     return;
-  } else if (isNaN(currentDisplay) && !(currentDisplay.includes('.'))) {
+  }
+  else if (isNaN(currentDisplay) && !(currentDisplay.includes('.'))) {
     changeDisplay(digit, true);
   } else {
     changeDisplay(digit, false);
   }
 }
 
-
+//if one of the main operations is pressed, display it and save inputted as the operator
+//also saves previously inputted digits as the first operand
+//if there's already 2 operands + an operator,
+//outputs previous expression first before saving new operator
+//the other operations(clear, delete, and equals) have separate functions to handle them
 function inputOperator(pressedOperator) {
   const pressed = pressedOperator.getAttribute('id');
-  console.log(pressed);
+
   switch (pressed) {
     case 'clear':
       clearDisplay();
@@ -40,12 +50,18 @@ function inputOperator(pressedOperator) {
       if (!operator) {
         operand = Number(currentDisplay);
       }
+      if (!isNaN(currentDisplay) && operator){
+        doOperation();
+      }
       operator = pressed;
       changeDisplay('+', true, true);
       break;
     case 'subtract':
       if (!operator) {
         operand = Number(currentDisplay);
+      }
+      if (!isNaN(currentDisplay) && operator){
+        doOperation();
       }
       operator = pressed;
       changeDisplay('-', true, true);
@@ -54,16 +70,20 @@ function inputOperator(pressedOperator) {
       if (!operator) {
         operand = Number(currentDisplay);
       }
+      if (!isNaN(currentDisplay) && operator){
+        doOperation();
+      }
       operator = pressed;
-      
       changeDisplay('x', true, true);
       break
     case 'divide':
       if (!operator) {
         operand = Number(currentDisplay);
       }
+      if (!isNaN(currentDisplay) && operator){
+        doOperation();
+      }
       operator = pressed;
-      
       changeDisplay('/', true, true);
       break
     case 'delete':
@@ -74,20 +94,12 @@ function inputOperator(pressedOperator) {
       console.log(currentDisplay);
       console.log(operator);
       doOperation();
-      /* const operand2 = Number(currentDisplay);
-      if (operator && !isNaN(currentDisplay)) {
-        let result = operate(operator, operand, operand2);
-        result = roundToTwoDecimals(result);
-        changeDisplay(String(result), true);
-        operand = result;
-        operator = undefined;
-        operationsText.textContent = '';
-      } */
       break;
   }
 }
 
-//Changes display, overriding current display if needed(ie replace "+" with inputted numbers)
+//Changes display, overriding current display if needed(ie replace "123" with pressed operator "+")
+//Also handles operations display(showing "5 +" when "+" is pressed)
 function changeDisplay(input, allowOverride, isOperator=false){
   
   allowOverride ? currentDisplay = input : currentDisplay += input;
@@ -98,9 +110,11 @@ function changeDisplay(input, allowOverride, isOperator=false){
   }    
 }
 
+//deletes a digit, or deletes the operator to edit the operand again
 function deleteFromDisplay() {
   if (isNaN(currentDisplay) && !(currentDisplay.includes('.'))){
     currentDisplay = operand;
+    operator = undefined;
   } else if (currentDisplay.length >= 2) {
     currentDisplay = currentDisplay.slice(0 ,-1);
   } else {
@@ -109,6 +123,7 @@ function deleteFromDisplay() {
   displayText.textContent = currentDisplay;
 }
 
+//reinitialize display and all global variables
 function clearDisplay() {
   currentDisplay = '0';
   operand = currentDisplay;
@@ -152,6 +167,7 @@ function operate(operation, a, b) {
   return result;
 }
 
+//when "=" is pressed, output result and sets it as the new first operand
 function doOperation() {
   const operand2 = Number(currentDisplay);
   if (operator && !isNaN(currentDisplay)) {
