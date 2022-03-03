@@ -8,3 +8,5 @@ out messier than I hoped. I tried my best to divvy up the needed logic into thei
 separate functions, but their purpose is still not inherently clear.
 I think my code documentation will be tested when I revisit this
 in the future.
+
+In the future, I plan to implement keyboard support and the ability to change inputs to negatives. I also want to tidy up the actual calculator to look more presentable.

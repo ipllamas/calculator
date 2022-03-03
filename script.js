@@ -41,6 +41,9 @@ function inputDigit(pressedDigit) {
 //the other operations(clear, delete, and equals) have separate functions to handle them
 function inputOperator(pressedOperator) {
   const pressed = pressedOperator.getAttribute('id');
+  if(currentDisplay === "NICE TRY") {
+    currentDisplay = '0';
+  }
 
   switch (pressed) {
     case 'clear':
@@ -145,6 +148,9 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+  if(a === 0 && b !== 0){
+    return "NICE TRY";
+  }
   return a/b;
 }
 
@@ -172,9 +178,14 @@ function doOperation() {
   const operand2 = Number(currentDisplay);
   if (operator && !isNaN(currentDisplay)) {
     let result = operate(operator, operand, operand2);
-    result = roundToTwoDecimals(result);
-    changeDisplay(String(result), true);
-    operand = result;
+    if (result === "NICE TRY") {
+      changeDisplay(result, true);
+      operand = 0;
+    } else {
+      result = roundToTwoDecimals(result);
+      changeDisplay(String(result), true);
+      operand = result;
+    }
     operator = undefined;
     operationsText.textContent = '';
   }
